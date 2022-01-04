@@ -1,6 +1,6 @@
 <?php
 
-$string = 'Hello world';
+$string = 'Hello PHP';
 print($string);
 
 $productName = 'adidas';
