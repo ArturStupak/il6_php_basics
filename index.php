@@ -1,6 +1,7 @@
 <?php
+include 'functions.php';
 
-$string = 'Hello PHP';
+/*$string = 'Hello PHP';
 print($string);
 
 $productName = 'adidas';
@@ -13,5 +14,9 @@ $array = [
     'price' => $productPrice, 
     'size' => $productSize];
 echo "<pre>";
-print_r ($array);
+print_r ($array);*/
+
+$title ="nauja antraste mano";
+$slug = getSlug($title);
+echo $slug;
 ?>
