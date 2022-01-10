@@ -1,4 +1,9 @@
 <?php
+const EMAIL_FIELD_KEY = 3;
+
+const NICKNAME_FIELD_KEY = 2;
+
+const PASSWORD_FIELD_KEY = 4;
 
 function clearEmail($email){
     return trim(strtolower($email));
@@ -43,4 +48,29 @@ function debug($data){
     echo '<pre>';
     var_dump($data);
     die();
+}
+function isValueUniq($value, $key){
+    $users = readFromCSV('users.csv');
+    foreach($users as $user){
+        if($user[$key] === $value){
+            return false;
+        }
+    }
+    return true;
+}
+//function checkFreeEmail($email, $data){
+//    foreach ($data as $element){
+//        if($email === $element[3]){
+//            echo "toks jau yra" . " ".  "<a href='index.php'>Back</a>";
+//            return false;
+//        }
+//    }
+//    return true;
+//}
+
+
+
+
+function generateNickName($firstName, $lastName){
+    return strtolower(substr($firstName, 0, 3) . substr($lastName, 0 ,3));
 }

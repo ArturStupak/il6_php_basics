@@ -1,11 +1,3 @@
-<!--<input type="text" name="first_name" placeholder="Vardas"><br>-->
-<!--<input type="text" name="last_name" placeholder="Pavarde"><br>-->
-<!--<input type="email" name="email" placeholder="emailas"><br>-->
-<!--<input type="password" name="password1" placeholder="********"><br>-->
-<!--<input type="password" name="password2" placeholder="********"><br>-->
-<!--<label for="agree_terms">Sutinku su registracijos taisyklemis</label>-->
-<!--<input type="checkbox" name="agree_terms" id="agree_terms"><br>-->
-
 <?php
 include 'helper.php';
 $firstName = $_POST['first_name'];
@@ -14,13 +6,49 @@ $email = $_POST['email'];
 $password = $_POST['password1'];
 $password2 = $_POST['password2'];
 
-$email = clearEmail($email);
 
-if(isPasswordValid($password, $password2) && isEmailValid($email)){
+
+$email = clearEmail($email);
+//$users = readFromCSV('user.csv');
+//
+//checkFreeEmail($email, $users);
+
+$users = readFromCsv('users.csv');
+
+//foreach($users as $user) {
+//    if ($email === $user[2]) {
+//        echo "Toks email jau egzistuoja". " ".  "<a href='index.php'>Grizti</a>";
+//        return false;
+//    }
+//}
+//checkFreeEmail($email, $users);
+
+//foreach($users as $user){
+//    if($nickname === $user[2]){
+//        $nickname = $nickname.rand(0,100);
+//    }
+//
+//}
+
+if(isPasswordValid($password, $password2) &&
+    isEmailValid($email) &&
+    isValueUniq($email , EMAIL_FIELD_KEY) &&
+    isset($_POST['agree_terms'])){
+    $nickname = generateNickName($firstName, $lastName);
+    while(!isValueUniq($nickname, NICKNAME_FIELD_KEY)){
+        $nickname = $nickname . rand(0,100);
+    }
     $data = [];
     $password = hashPassword($password);
-    $data[]=  [$firstName, $lastName, $email, $password];
+    $data[]=  [$firstName, $lastName, $nickname, $email, $password];
     writeToCSV($data, 'users.csv');
 }else{
     echo 'Patikrinkite duomenis ir pabandykite dar karta';
 }
+
+//if(isset($_POST['agree_terms'])) {
+//    writeToCSV($data, 'users.csv');
+//}else{
+//    echo 'Nesutikote su taisyklemes';
+//    die();
+//}
