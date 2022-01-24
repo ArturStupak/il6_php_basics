@@ -4,6 +4,11 @@
 </head>
 <body>
 <div class="header">
+    <form action="login.php" method="POST">
+        <input name="email" type="email" placeholder="john@email.com">
+        <input name="password" type="password" placeholder="********">
+        <input value="login" type="submit" name="login">
+    </form>
     <ul>
         <li>
             <a href="create.php">Add</a><br>

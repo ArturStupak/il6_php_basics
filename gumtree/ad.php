@@ -1,6 +1,10 @@
 <?php
+
 include 'parts/header.php'; ?>
+
 <?php
+
+$id=$_GET['id'];
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -14,31 +18,47 @@ try {
     echo "Connection failed: " . $e->getMessage();
 }
 
-$sql = 'SELECT * FROM ads';
+$sql = "SELECT * FROM ads WHERE id=".$id;
 $rez = $conn->query($sql);
 $ads = $rez->fetchAll();
 //echo "<pre>";
 //print_r($ads);
 ?>
+
 <html>
 <body>
 <?php foreach ($ads as $ad) : ?>
     <div class="product-wrap">
         <div class="name">
-            <?php echo $ad['title'];?>
+            <?php echo "Title: ". $ad['title'];?>
         </div>
         <div class="price">
-            <?php echo $ad['price'];?>
+            <?php echo "Description: " .$ad['description'];?>
         </div>
         <div class="year">
-            <?php echo $ad['year'];?>
+            <?php echo "Manufacturer: " .$ad['manufacturer_id'];?>
+        </div>
+        <div class="year">
+            <?php echo "Model: " .$ad['model_id'];?>
+        </div>
+        <div class="year">
+            <?php echo "Price: " .$ad['price'];?>
+        </div>
+        <div class="year">
+            <?php echo "Year: " .$ad['year'];?>
+        </div>
+        <div class="year">
+            <?php echo "Type: " .$ad['type_id'];?>
+        </div>
 
-        </div>
-        <div>
-           <a href="http://localhost/pamokos/gumtree/ad.php?id=<?php echo $ad['id']?>">More</a>
-        </div>
+
+<!--        <div>-->
+<!--           <a href="http://localhost/pamokos/gumtree/ad.php?id=--><?php //echo $ad['id']?><!--">More</a>-->
+<!--        </div>-->
         <hr>
     </div>
 <?php endforeach?>
 </body>
-<?php include 'parts/footer.php'; ?>
+
+
+<php?include 'parts/footer.php'; ?>

@@ -23,7 +23,15 @@ $cities = $rez->fetchAll();
 
 <html>
 <body>
-
+<h2>Registracijos forma</h2>
+<form action="userpost.php" method="post">
+    <input type="text" name="first_name" placeholder="Vardas"><br>
+    <input type="text" name="last_name" placeholder="Pavarde"><br>
+    <input type="email" name="email" placeholder="emailas"><br>
+    <input type="password" name="password1" placeholder="********"><br>
+    <input type="password" name="password2" placeholder="********"><br>
+    <input type="number" name="number" placeholder="PhoneNumber"><br>
+    <select name="city">
        <?php
             foreach($cities as $city){
                 echo '<option value="'.$city['id'].'">' .$city['name'].'</option>';

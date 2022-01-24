@@ -14,20 +14,18 @@ try {
     echo "Connection failed: " . $e->getMessage();
 }
 
-$sql = 'SELECT * FROM cities';
-$rez = $conn->query($sql);
-$cities = $rez->fetchAll();
 
 if (isset($_POST['register'])) {
     $name = $_POST['first_name'];
     $last_name = $_POST['last_name'];
     $email = $_POST['email'];
-    $password = $_POST['password1'];
+    $password = md5($_POST['password1']);
     $number = $_POST['number'];
+    $cityID = $_POST['city'];
 
 
     $sql = 'INSERT INTO users (name, last_name, email, password, phone, city_id)
-            VALUES("' . $name . '", "' . $last_name . '", "' . $email . '" , "' . $password . '" ,"' . $number . '", 1)';
+            VALUES("' . $name . '", "' . $last_name . '", "' . $email . '" , "' . $password . '" ,"' . $number . '", '.$cityID.')';
 
 //    echo $sql;
 
