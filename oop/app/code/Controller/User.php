@@ -9,8 +9,9 @@ use Model\User as UserModel;
 use Model\City;
 use Helper\Url;
 use Core\AbstractController;
+use Core\Interfaces\ControllerInterface;
 
-class User extends AbstractController
+class User extends AbstractController implements ControllerInterface
 {
 
     public function index()
@@ -168,7 +169,7 @@ class User extends AbstractController
             $user->setPassword(md5($_POST['password']));
         }
         if($user->getEmail() != $_POST['email']){
-            if(Validator::checkEmail($_POST['email']) && UserModel::isValueUnic('emai', $_POST['email'], 'users')){
+            if(Validator::checkEmail($_POST['email']) && UserModel::isValueUnic('emai', $_POST['email'])){
                 $user->setEmail($_POST['email']);
             }
         }
@@ -205,7 +206,7 @@ class User extends AbstractController
     {
         $passMatch = Validator::checkPassword($_POST['password'], $_POST['password2']);
         $isEmailValid = Validator::checkEmail($_POST['email']);
-        $isEmailUnic = UserModel::isValueUnic('email', $_POST['email'], 'users');
+        $isEmailUnic = UserModel::isValueUnic('email', $_POST['email']);
         if($passMatch && $isEmailValid && $isEmailUnic){
             $user = new UserModel();
             $user->setName($_POST['name']);
@@ -215,6 +216,7 @@ class User extends AbstractController
             $user->setEmail($_POST['email']);
             $user->setCityId($_POST['city_id']);
             $user->setActive( 1);
+            $user->setRoleId(0);
             $user->save();
             Url::redirect('user/login');
         }else{

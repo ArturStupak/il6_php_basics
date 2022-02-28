@@ -7,10 +7,12 @@ use Helper\DBHelper;
 use Helper\FormHelper;
 use Helper\Url;
 use Model\City;
+use Model\Comments;
 use Model\User as UserModel;
 use Model\Ad;
+use Core\Interfaces\ControllerInterface;
 
-class Catalog extends AbstractController
+class Catalog extends AbstractController implements ControllerInterface
 {
 //    public function show($id = null)
 //    {
@@ -30,8 +32,12 @@ class Catalog extends AbstractController
 
     public function index()
     {
-
-        $this->data['ads'] = Ad::getAllAds();
+        $this->data['count'] = Ad::count();
+        $page = 0;
+        if(isset($_GET['p'])){
+            $page = (int)$_GET['p'] -1;
+        }
+        $this->data['ads'] = Ad::getAllAds($page * 2, 2);
         $this->render('catalog/list');
 
     }
@@ -110,7 +116,7 @@ class Catalog extends AbstractController
     public function create()
     {
         $slug = URL::slug($_POST['title']);
-        while(!Ad::isValueUnic('slug', $slug, 'ads'))
+        while(!Ad::isValueUnic('slug', $slug))
         {
             $slug = $slug.rand(0,100);
         }
@@ -242,10 +248,45 @@ class Catalog extends AbstractController
         if($this->data['ad']){
             $ad->setVisitors($ad->getVisitors() + 1);
             $ad->save();
+            $form = new FormHelper('catalog/createcomment', 'POST');
+
+            $form->textArea('comment', 'comment');
+
+            $form->input([
+                'type' => 'submit',
+                'value' => 'sukurti',
+                'name' => 'create'
+            ]);
+            $form->input([
+                'name' => 'id',
+                'type' => 'hidden',
+                'value' => $ad->getId()
+            ]);
+
+            $this->data['form'] = $form->getForm();
+
+            $this->data['comments'] = Comments::getAdComments($ad->getId());
             $this->render('catalog/single');
         }else{
             $this->render('parts/errors/error404');
         }
+
+
+    }
+
+    public function createcomment()
+    {
+
+        $comment = new Comments();
+        $comment->setUserId($_SESSION['user_id']);
+        $comment->setMessage($_POST['comment']);
+        $comment->setIp($_SERVER['REMOTE_ADDR']);
+        $comment->setadId($_POST['id']);
+        $comment->save();
+        $ad = new Ad();
+        $ad->load($_POST['id']);
+        Url::redirect('catalog/show/' . $ad->getSlug());
+
     }
 
 }

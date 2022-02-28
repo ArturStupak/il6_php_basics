@@ -3,8 +3,9 @@ namespace Controller;
 
 use Core\AbstractController;
 use Model\Ad;
+use Core\Interfaces\ControllerInterface;
 
-class Home extends AbstractController
+class Home extends AbstractController implements ControllerInterface
 {
     public function index()
     {

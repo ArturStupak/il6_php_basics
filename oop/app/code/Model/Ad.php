@@ -5,12 +5,12 @@ namespace Model;
 use Core\AbstractModel;
 use Helper\DBHelper;
 
+use Core\Interfaces\ModelInterface;
 
 
-
-class Ad extends AbstractModel
+class Ad extends AbstractModel implements ModelInterface
 {
-
+    protected const TABLE = 'ads';
 
     private $title;
 
@@ -38,9 +38,13 @@ class Ad extends AbstractModel
 
     private $visitors;
 
-    public function __construct()
+
+
+    public function __construct($id = null)
     {
-        $this->table = 'ads';
+        if($id !== null){
+            $this->load($id);
+        }
     }
 
     public function getTitle()
@@ -176,7 +180,7 @@ class Ad extends AbstractModel
     }
 
 
-    protected function assignData()
+    public function assignData()
     {
         $this->data = [
             'title' => $this->title,
@@ -198,7 +202,7 @@ class Ad extends AbstractModel
     public function load($id)
     {
         $db = new DBHelper();
-        $ad = $db->select()->from('ads')->where('id', $id)->getOne();
+        $ad = $db->select()->from(self::TABLE)->where('id', $id)->getOne();
         if(!empty($ad))
         {
             $this->id = $ad['id'];
@@ -222,7 +226,7 @@ class Ad extends AbstractModel
     public function loadBySlug($slug)
     {
         $db = new DBHelper();
-        $rez = $db->select()->from($this->table)->where('slug', $slug)->getOne();
+        $rez = $db->select()->from(self::TABLE)->where('slug', $slug)->getOne();
         if(!empty($rez))
         {
             $this->load($rez['id']);
@@ -232,7 +236,7 @@ class Ad extends AbstractModel
         }
     }
 
-    public static function getAllAds()
+    public static function getAllAds($page = null, $limit = null)
     {
 //        $results_per_page= 4;
 //        if(isset($_GET['page']))
@@ -243,7 +247,16 @@ class Ad extends AbstractModel
 //        }
 
         $db = new DBHelper();
-        $data = $db->select()->from('ads')->where('active', 1)->get();
+        $db->select()->from(self::TABLE)->where('active', 1);
+        if($limit != null)
+        {
+            $db->limit($limit);
+        }
+        if($page != null)
+        {
+            $db->offset($page);
+        }
+        $data = $db->get();
         $ads = [];
         foreach ($data as $element) {
             $ad = new Ad();
@@ -256,7 +269,7 @@ class Ad extends AbstractModel
     public static function getNewest($limit)
     {
         $db = new DBHelper();
-        $data = $db->select()->from('ads')->orderBy('id', 'DESC')->limit($limit)->get();
+        $data = $db->select()->from(self::TABLE)->orderBy('id', 'DESC')->limit($limit)->get();
         $ads = [];
         foreach ($data as $element) {
             $ad = new Ad();
@@ -270,7 +283,7 @@ class Ad extends AbstractModel
     {
         $db = new DBHelper();
         $data = $db->select()
-            ->from('ads')
+            ->from(self::TABLE)
             ->where('active', 1)
             ->orderBy('visitors', 'DESC')
             ->limit($limit)
@@ -284,10 +297,33 @@ class Ad extends AbstractModel
         return $ads;
     }
 
+    public static function getAds($page = null, $limit = null)
+    {
+//
+        $db = new DBHelper();
+        $db->select()->from(self::TABLE);
+        if($limit != null)
+        {
+            $db->limit($limit);
+        }
+        if($page != null)
+        {
+            $db->offset($page);
+        }
+        $data = $db->get();
+        $ads = [];
+        foreach ($data as $element) {
+            $ad = new Ad();
+            $ad->load($element['id']);
+            $ads[] = $ad;
+        }
+        return $ads;
+    }
 
+    public function getcomments()
+    {
 
-
-
+    }
 
 
 }

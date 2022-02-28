@@ -1,3 +1,4 @@
+<?php $pages = ceil($this->data['count'] / 2); ?>
 <div class="wrapper">
     <?php foreach ($this->data['ads'] as $ad): ?>
         <div class="box">
@@ -13,4 +14,12 @@
             </a>
         </div>
     <?php endforeach; ?>
+</div>
+<div class="pagination">
+    <ul>
+        <?php for($i = 1;$i <= $pages; $i++):?>
+            <a href="<?php echo $this->url('catalog'). '?p=' . $i; ?>"><?php echo $i ?></a>
+
+        <?php endfor;?>
+    </ul>
 </div>

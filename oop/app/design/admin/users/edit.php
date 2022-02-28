@@ -1,5 +1,5 @@
-<div class="register">
-    <h1>Naujo userio registracijos forma</h1>
+<div>
+    <h1>Keisti vartotojo duomenis</h1>
     <div class="form-wrapper">
         <?php echo $this->data['form']; ?>
     </div>

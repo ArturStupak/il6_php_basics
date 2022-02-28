@@ -4,10 +4,10 @@ namespace Model;
 
 use Core\AbstractModel;
 use Helper\DBHelper;
-use Helper\FormHelper;
-use Model\City;
 
-class User extends AbstractModel
+use Core\Interfaces\ModelInterface;
+
+class User extends AbstractModel implements ModelInterface
 {
 
 
@@ -27,9 +27,16 @@ class User extends AbstractModel
 
     private $active;
 
-    public function __construct()
+    private $roleid;
+
+    protected const TABLE = 'users';
+
+    public function __construct($id = null)
     {
-        $this->table = 'users';
+        if($id !== null){
+            $this->load($id);
+        }
+
 
     }
 
@@ -41,7 +48,9 @@ class User extends AbstractModel
             'email' => $this->email,
             'password' => $this->password,
             'phone' => $this->phone,
-            'city_id' => $this->cityId
+            'city_id' => $this->cityId,
+            'active' => $this->active,
+            'role_id' => $this->roleid
         ];
     }
 
@@ -122,11 +131,20 @@ class User extends AbstractModel
         $this->active = $active;
     }
 
+    public function getRoleId()
+    {
+        return $this->roleid;
+    }
+
+    public function setRoleId($id)
+    {
+        $this->roleid = $id;
+    }
 
     public function load($id)
     {
         $db = new DBHelper();
-        $data = $db->select()->from('users')->where('id', $id)->getOne();
+        $data = $db->select()->from(self::TABLE)->where('id', $id)->getOne();
         $this->id = $data['id'];
         $this->name = $data['name'];
         $this->lastName = $data['last_name'];
@@ -134,6 +152,8 @@ class User extends AbstractModel
         $this->email = $data['email'];
         $this->password = $data['password'];
         $this->cityId = $data['city_id'];
+        $this->active = $data['active'];
+        $this->roleid = $data['role_id'];
         $city = new City();
         $this->city = $city->load($this->cityId);
         return $this;
@@ -160,7 +180,7 @@ class User extends AbstractModel
         public static function getAllUsers()
         {
             $db = new DBHelper();
-            $data = $db->select('id')->from('users')->get();
+            $data = $db->select('id')->from(self::TABLE)->get();
             $users = [];
             foreach ($data as $element) {
                 $user = new User();
