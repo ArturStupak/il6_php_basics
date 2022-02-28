@@ -1,3 +1,4 @@
+
 <div class="list-wrapper">
     <ol>
         <?php foreach ($this->data['users'] as $user): ?>
@@ -7,5 +8,6 @@
             </a>
         </li>
         <?php endforeach; ?>
+
     </ol>
 </div>

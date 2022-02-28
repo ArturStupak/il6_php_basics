@@ -1,0 +1,155 @@
+nav ul{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+header{
+    border: solid 1px #000;
+    margin-bottom: 50px;
+}
+nav ul li{
+    float: left;
+}
+nav ul li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+nav ul li a:hover{
+    background-color: #111;
+}
+li a:hover:not(.home) {
+    background-color: #111;
+}
+footer{
+    border-top: 1px solid #000000;
+    text-align: center;
+}
+
+.myButton {
+    color: rgb(255, 255, 255); font-size: 16px; line-height: 16px; padding: 6px; border-radius: 10px; font-family: Georgia, serif; font-weight: normal; text-decoration: none; font-style: normal; font-variant: normal; text-transform: none; background-image: linear-gradient(to right, rgb(28, 110, 164) 0%, rgb(35, 136, 203) 50%, rgb(20, 78, 117) 100%); box-shadow: rgb(0, 0, 0) 5px 5px 15px 5px; border: 2px solid rgb(28, 110, 164); display: inline-block;}
+.myButton:hover {
+    background: #1C6EA4; }
+.myButton:active {
+    background: #144E75; }
+
+.homePage{
+
+    left: 900px;
+    color: black;
+}
+.login h1{
+    color:red;
+}
+.register h1{
+    color: red;
+}
+.row {
+    display: flex;
+    flex-direction: column;
+    padding-left: 300px;
+    padding-right: 300px;
+}
+.row h1{
+    color: red;
+}
+.homePage h1{
+    color: red;
+}
+
+.column {
+    display: flex;
+    flex-wrap: wrap;
+
+
+}
+
+.column h1{
+    text-align: center;
+}
+
+.wrapper {
+    display: flex;
+    flex-wrap: wrap;
+}
+.box {
+    margin: 10px;
+    width: 200px;
+    text-align: center;
+
+}
+.box img
+{
+    width: 100%;
+}
+.wrapper-single
+{
+    display: flex;
+    flex-direction: column;
+}
+.comments
+{
+    display: flex;
+    flex-direction: column;
+}
+
+
+.demotext {
+    border: 2px ridge #1C6EA4;
+    /*width: 300px;*/
+    margin: 10px;
+    margin-right: 300px;
+    box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.79);
+    /*text-align: center;*/
+    /*line-height: 75px;*/
+    /*font-size: 30px;*/
+}
+
+.demotext h2
+{
+    font-family: Georgia, serif;
+    font-size: 16px;
+    letter-spacing: 2px;
+    word-spacing: 2px;
+    color: #000000;
+    font-weight: 400;
+    text-decoration: none solid rgb(68, 68, 68);
+    font-style: normal;
+    font-variant: normal;
+    text-transform: none;
+}
+
+body{
+    background: url("https://images.hdqwalls.com/wallpapers/bmw-i8-2019-o1.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.list-wrapper{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    max-width: 300px;
+    margin: 10px;
+    text-align: center;
+    font-family: arial;
+}
+.list-wrapper > a:link, a:visited {
+    background-color: blue;
+    color: white;
+    padding: 14px 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin:10px;
+    border-radius: 50px;
+}
+.price{
+    color: grey;
+    font-size: 22px;
+}

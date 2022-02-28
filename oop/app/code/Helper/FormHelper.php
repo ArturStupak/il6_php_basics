@@ -12,20 +12,6 @@ class FormHelper
         $this->form = '<form action="'. BASE_URL . $action . '" method="' . $method . '">';
     }
 
-    /**
-     * $data3 = [
-     * 'type' => 'email',
-     * 'name' => 'email',
-     * 'placeholder' => 'john@gmail.com'
-     * ];
-     */
-
-
-//$data4 = [
-//'type' => 'password',
-//'name' => 'password',
-//'placeholder' => '******'
-//];
     // $this->form = '<form action="registration.php" method="POST">';
     public function input($data)
     {

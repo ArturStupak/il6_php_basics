@@ -123,4 +123,10 @@ class DBHelper
         $this->sql .= 'LIMIT ' .$number ;
         return $this;
     }
+
+    public function offset($page)
+    {
+        $this->sql .= ' OFFSET '. $page. ' ';
+        return $this;
+    }
 }
