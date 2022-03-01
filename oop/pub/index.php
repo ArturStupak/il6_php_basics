@@ -3,8 +3,8 @@ date_default_timezone_set('Europe/Vilnius');
 ini_set('display_errors',1);
 ini_set('display_startup_errors',1);
 error_reporting(E_ALL);
-include 'vendor/autoload.php';
-include 'config.php';
+include '../vendor/autoload.php';
+include '../config.php';
 session_start();
 
 if(isset($_SERVER['PATH_INFO']) && $_SERVER['PATH_INFO'] !== '/'){
