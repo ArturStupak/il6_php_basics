@@ -279,7 +279,7 @@ class Catalog extends AbstractController implements ControllerInterface
 
         $comment = new Comments();
         $comment->setUserId($_SESSION['user_id']);
-        $comment->setMessage($_POST['comment']);
+        $comment->setComment($_POST['comment']);
         $comment->setIp($_SERVER['REMOTE_ADDR']);
         $comment->setadId($_POST['id']);
         $comment->save();

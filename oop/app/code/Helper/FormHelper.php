@@ -49,6 +49,7 @@ class FormHelper
              $this->form .=' value="'.$key.'">'.$option.'</option>';
         }
         $this->form .= '</select>';
+        $this->form .= '<br>';
 
     }
 

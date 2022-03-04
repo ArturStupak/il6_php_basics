@@ -27,7 +27,7 @@
                 <div>
                         <div class="demotext">
                             <h2>Komentaras</h2>
-                           <p><?php echo $comment->getMessage(); ?></p>
+                           <p><?php echo $comment->getComment(); ?></p>
                         </div>
                 </div>
             <?php endforeach; ?>

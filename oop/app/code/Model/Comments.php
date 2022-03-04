@@ -47,14 +47,14 @@ class Comments extends AbstractModel implements ModelInterface
         $this->userId = $userId;
     }
 
-    public function getMessage()
+    public function getComment()
     {
-        return $this->message;
+        return $this->comment;
     }
 
-    public function setMessage($message)
+    public function setComment($comment)
     {
-        $this->message = $message;
+        $this->comment = $comment;
     }
 
     public function getDate()
@@ -89,7 +89,7 @@ class Comments extends AbstractModel implements ModelInterface
         $data = $db->select()->from(self::TABLE)->where('id', $id)->getOne();
         $this->id = $data['id'];
         $this->userId = $data['user_id'];
-        $this->message = $data['message'];
+        $this->comment = $data['comment'];
         $this->ip = $data['ip'];
         $this->adId = $data['ad_id'];
         return $this;

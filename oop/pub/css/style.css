@@ -1,33 +1,9 @@
-nav ul{
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: #333;
-    position: fixed;
-    top: 0;
-    width: 100%;
-}
+
 header{
     border: solid 1px #000;
     margin-bottom: 50px;
 }
-nav ul li{
-    float: left;
-}
-nav ul li a {
-    display: block;
-    color: white;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-}
-nav ul li a:hover{
-    background-color: #111;
-}
-li a:hover:not(.home) {
-    background-color: #111;
-}
+
 footer{
     border-top: 1px solid #000000;
     text-align: center;
@@ -103,14 +79,19 @@ footer{
 
 .demotext {
     border: 2px ridge #1C6EA4;
-    /*width: 300px;*/
+    width: 300px;
     margin: 10px;
     margin-right: 300px;
     box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.79);
     /*text-align: center;*/
     /*line-height: 75px;*/
     /*font-size: 30px;*/
+    border-radius: 50px;
+    padding: 10px;
+
+
 }
+
 
 .demotext h2
 {
@@ -118,19 +99,22 @@ footer{
     font-size: 16px;
     letter-spacing: 2px;
     word-spacing: 2px;
-    color: #000000;
+    color: red;
     font-weight: 400;
     text-decoration: none solid rgb(68, 68, 68);
     font-style: normal;
     font-variant: normal;
     text-transform: none;
 }
-
-body{
-    background: url("https://images.hdqwalls.com/wallpapers/bmw-i8-2019-o1.jpg");
-    background-repeat: no-repeat;
-    background-attachment: fixed;
+.wrapper-single h1{
+    color:red;
 }
+
+/*body{*/
+/*    background: url("https://images.hdqwalls.com/wallpapers/bmw-i8-2019-o1.jpg");*/
+/*    background-repeat: no-repeat;*/
+/*    background-attachment: fixed;*/
+/*}*/
 
 .list-wrapper{
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
@@ -152,4 +136,63 @@ body{
 .price{
     color: grey;
     font-size: 22px;
+}
+.h2{
+    color: red;
+}
+.chat{
+    display: flex;
+    flex-wrap: wrap;
+}
+.chat form >div
+{
+    margin: 10px;
+}
+
+@media screen and (max-width: 500px) {
+    .navbar a {
+        float: none;
+        display: block;
+    }
+}
+
+.navbar {
+    width: 100%;
+    background-color: #555;
+    overflow: auto;
+}
+.navbar a {
+    float: left;
+    text-align: center;
+    padding: 12px;
+    color: white;
+    text-decoration: none;
+    font-size: 17px;
+}
+.navbar a:hover {
+    background-color: #000;
+}
+.active {
+    background-color: #04AA6D;
+}
+.notification .badge {
+    position: absolute;
+    top: 1px;
+    right: -10px;
+    padding: 3px 8px;
+    border-radius: 50%;
+    background-color: red;
+    color: white;
+}
+.notification:hover {
+    background: red;
+}
+.notification {
+
+    color: white;
+    text-decoration: none;
+    padding: 15px 26px;
+    position: relative;
+    display: inline-block;
+    border-radius: 2px;
 }

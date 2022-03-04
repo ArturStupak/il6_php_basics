@@ -5,6 +5,7 @@ namespace Controller;
 use Helper\DBHelper;
 use Helper\FormHelper;
 use Helper\Validator;
+use Model\Comments;
 use Model\User as UserModel;
 use Model\City;
 use Helper\Url;
@@ -248,6 +249,8 @@ class User extends AbstractController implements ControllerInterface
         {
             session_destroy();
         }
+
+
 
 
 }

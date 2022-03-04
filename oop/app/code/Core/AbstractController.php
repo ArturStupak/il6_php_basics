@@ -2,6 +2,7 @@
 
 namespace Core;
 use Helper\Url;
+use Model\Messages;
 use Model\User;
 
 class AbstractController
@@ -13,6 +14,9 @@ class AbstractController
         $this->data = [];
         $this->data['title'] = 'autopliusas';
         $this->data['meta_description'] = '';
+        if($this->isUserLoged()){
+            $this->data['count'] = Messages::getCountMessages($_SESSION['user_id']);
+        }
     }
 
 
