@@ -1,26 +1,28 @@
 <?php
 
+declare(strict_types=1);
 namespace Model;
 
 use Helper\DBHelper;
 
 class City
 {
-    private $id;
-    private $name;
+    private int $id;
+    private string $name;
 
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
 
-    public static function getCities() {
+    public static function getCities(): array
+    {
         $db = new DBHelper();
         $data = $db->select()->from('cities')->get();
         $cities = [];
@@ -32,10 +34,10 @@ class City
         return $cities;
     }
 
-    public function load($id)
+    public function load(int $id) :City
     {
         $db = new DBHelper();
-        $city = $db->select()->from('cities')->where('id', $id)->getOne();
+        $city = $db->select()->from('cities')->where('id',(string) $id)->getOne();
         $this->id = $city['id'];
         $this->name = $city['name'];
         return $this;

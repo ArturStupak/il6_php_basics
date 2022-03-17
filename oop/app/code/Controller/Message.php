@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 namespace Controller;
 
 
@@ -20,72 +20,66 @@ use Model\User as UserModel;
 class Message extends AbstractController implements ControllerInterface
 {
 
-    public function index()
+    public function __construct()
     {
+        parent::__construct();
+        if(!$this->isUserLoged())
+        {
+            Url::redirect('user/login');
+        }
+    }
 
-        $this->data['message'] = Messages::getUserMessages($_SESSION['user_id']);
-        $this->data['sendermessage'] = Messages::getSenderMessage($_SESSION['user_id']);
 
+    public function index(): void
+    {
+        $messages = Messages::getUserRelatedMessage();
+        $chats = [];
+        foreach ($messages as $message) {
+            if($message->getSenderId() > $message->getReceiverId())
+            {
+                $key = $message->getReceiverId(). '-' . $message->getSenderId();
+            }else{
+                $key = $message->getSenderId(). '-' . $message->getReceiverId();
+            }
+            $chatFriendId = $message->getSenderId() == $_SESSION['user_id'] ? $message->getReceiverId() : $message->getSenderId();
+            $chatFriend = new UserModel();
+            $chatFriend->load($chatFriendId);
+            $chats[$key]['message'] = $message;
+            $chats[$key]['chat_friend'] = $chatFriend;
+         }
+
+        usort($chats, function ($item1, $item2) {
+            return $item2['message']->getId() <=> $item1['message']->getId();
+        });
+        $this->data['chat'] = $chats;
         $this->render('message/all');
 
     }
 
-    public function message()
+    public function chat($chatFriendId)
     {
-
-        if (!isset($_SESSION['user_id'])) {
-
-            Url::redirect('user/login');
-        } else {
-            $userId = $_SESSION['user_id'];
-            $user = new UserModel();
-            $user->load($userId);
-
-            $users = UserModel::getAllUsers();
-            $options = [];
-            foreach ($users as $user) {
-                $id = $user->getId();
-                $options[$id] = $user->getName();
-            }
-
-            $this->data['options'] = $options;
-            $this->render('message/chat');
-        }
-
-
+        $this->data['messages'] = Messages::getUserMessagesWithFriend($chatFriendId);
+        Messages::makeSeen($chatFriendId, $_SESSION['user_id']);
+        $this->data['receiver_id'] = $chatFriendId;
+        $this->render('message/chat');
     }
 
-    public function chat()
+    public function send()
     {
-
-        if (!isset($_SESSION['user_id'])) {
-
-            Url::redirect('user/login');
-        } else {
-            $userId = $_SESSION['user_id'];
-            $user = new UserModel();
-            $user->load($userId);
-
-            $users = UserModel::getAllUsers();
-            $options = [];
-            foreach ($users as $user) {
-                $id = $user->getId();
-                $options[$id] = $user->getName();
-            }
-
-            $this->data['options'] = $options;
-            $this->render('message/all');
-        }
-
-
+        $message = new Messages();
+        $message->setMessage($_POST['message']);
+        $message->setReceiverId((int)$_POST['receiver_id']);
+        $message->setSenderId($_SESSION['user_id']);
+        $message->setStatus(1);
+        $message->save();
+        Url::redirect('message/chat/' . $_POST['receiver_id']);
     }
 
-//
-    public function createMessage()
+    public function createMessage(): void
     {
 
         $ad = new Messages();
-        $ad->setReceiverId($_POST['user_id']);
+        $ad->setReceiverId((int)$_POST['user_id']);
         $ad->setMessage($_POST['message']);
         $ad->setSenderId($_SESSION['user_id']);
         $ad->setStatus(1);
@@ -94,12 +88,21 @@ class Message extends AbstractController implements ControllerInterface
 
     }
 
-    public function test()
-    {
-       $test = Messages::getUsers();
-       echo "<pre>";
-       print_r($test);
-    }
+//    public function test(): void
+//    {
+//       $users = Messages::getUsers();
+////       echo "<pre>";
+////       print_r($test);
+//        $options = [];
+//        foreach ($users as $user) {
+//            $id = $user->getId();
+//            $options[$id] = $user->getName();
+//        }
+//
+//        $this->data['options'] = $options;
+//        $this->render('message/all');
+//
+//    }
 
 
 }

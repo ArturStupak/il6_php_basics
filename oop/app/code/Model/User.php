@@ -1,5 +1,6 @@
 <?php
 
+declare(strict_types=1);
 namespace Model;
 
 use Core\AbstractModel;
@@ -11,27 +12,27 @@ class User extends AbstractModel implements ModelInterface
 {
 
 
-    private $name;
+    private string $name;
 
-    private $lastName;
+    private string $lastName;
 
-    private $email;
+    private string $email;
 
-    private $password;
+    private string $password;
 
-    private $phone;
+    private string $phone;
 
-    private $cityId;
+    private int $cityId;
 
-    private $city;
+    private City $city;
 
-    private $active;
+    private int  $active;
 
-    private $roleid;
+    private int $roleid;
 
     protected const TABLE = 'users';
 
-    public function __construct($id = null)
+    public function __construct(?int $id = null)
     {
         if($id !== null){
             $this->load($id);
@@ -40,7 +41,7 @@ class User extends AbstractModel implements ModelInterface
 
     }
 
-    public function assignData()
+    public function assignData(): void
     {
         $this->data = [
             'name' => $this->name,
@@ -56,95 +57,95 @@ class User extends AbstractModel implements ModelInterface
 
 
 
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    public function setName($name)
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
 
-    public function getLastName()
+    public function getLastName(): string
     {
         return $this->lastName;
     }
 
-    public function setLastName($lastName)
+    public function setLastName(string $lastName): void
     {
         $this->lastName = $lastName;
     }
 
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->email;
     }
 
-    public function setEmail($email)
+    public function setEmail(string $email): void
     {
         $this->email = $email;
     }
 
-    public function getPassword()
+    public function getPassword(): string
     {
         return $this->password;
     }
 
-    public function setPassword($password)
+    public function setPassword(string $password): void
     {
         $this->password = $password;
     }
 
-    public function getPhone()
+    public function getPhone(): string
     {
         return $this->phone;
     }
 
-    public function setPhone($phone)
+    public function setPhone(string $phone): void
     {
         $this->phone = $phone;
     }
 
-    public function getCityId()
+    public function getCityId(): int
     {
         return $this->cityId;
     }
 
-    public function getCity()
+    public function getCity(): City
     {
         return $this->city;
     }
 
-    public function setCityId($id)
+    public function setCityId(int $id): void
     {
         $this->cityId = $id;
     }
 
-    public function isActive()
+    public function isActive(): int
     {
         return $this->active;
     }
 
-    public function setActive($active)
+    public function setActive(int $active): void
     {
         $this->active = $active;
     }
 
-    public function getRoleId()
+    public function getRoleId(): int
     {
         return $this->roleid;
     }
 
-    public function setRoleId($id)
+    public function setRoleId(int $id): void
     {
         $this->roleid = $id;
     }
 
-    public function load($id)
+    public function load(int $id): object
     {
         $db = new DBHelper();
-        $data = $db->select()->from(self::TABLE)->where('id', $id)->getOne();
+        $data = $db->select()->from(self::TABLE)->where('id', (string) $id)->getOne();
         $this->id = $data['id'];
         $this->name = $data['name'];
         $this->lastName = $data['last_name'];
@@ -160,7 +161,7 @@ class User extends AbstractModel implements ModelInterface
     }
 
 
-    public static function checkLoginCredentionals($email, $pass)
+    public static function checkLoginCredentionals(string $email, string $pass): ?int
     {
         $db = new DBHelper();
         $rez = $db
@@ -168,16 +169,16 @@ class User extends AbstractModel implements ModelInterface
             ->from('users')
             ->where('email', $email)
             ->andWhere('password', $pass)
-            ->andWhere('active', 1)
+            ->andWhere('active', (string)1)
             ->getOne();
-        if (isset($rez['id'])) {
+        if(isset($rez['id'])) {
             return $rez['id'];
         } else {
-            return false;
+            return null;
         }
     }
 
-        public static function getAllUsers()
+        public static function getAllUsers(): array
         {
             $db = new DBHelper();
             $data = $db->select('id')->from(self::TABLE)->get();

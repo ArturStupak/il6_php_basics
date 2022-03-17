@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Controller;
 
 use Helper\DBHelper;
@@ -15,23 +17,21 @@ use Core\Interfaces\ControllerInterface;
 class User extends AbstractController implements ControllerInterface
 {
 
-    public function index()
+    public function index(): void
     {
         $this->data['ad'] = Ad::getAllAds();
         $this->render('catalog/list');
     }
-    public function show($id)
+    public function show(int $id): void
     {
         echo 'User controller ID: ' . $id;
     }
 
-    public function register()
+    public function register(): void
     {
 
         $db = new DBHelper();
         $form = new FormHelper('user/create', 'POST');
-
-
 
         $form->input([
             'name' => 'name',
@@ -84,7 +84,7 @@ class User extends AbstractController implements ControllerInterface
         $this->render('user/register');
     }
 
-    public function edit()
+    public function edit(): void
     {
         if(!isset($_SESSION['user_id'])) {
 
@@ -155,7 +155,7 @@ class User extends AbstractController implements ControllerInterface
         $this->render('user/edit');
     }
 
-    public function update()
+    public function update(): void
     {
 
         $user = new UserModel();
@@ -178,7 +178,7 @@ class User extends AbstractController implements ControllerInterface
         Url::redirect('user/edit');
 
     }
-    public function login()
+    public function login(): void
     {
         $form = new FormHelper('user/check', 'POST');
         $form->input([
@@ -203,7 +203,7 @@ class User extends AbstractController implements ControllerInterface
     }
 
 
-    public function create()
+    public function create(): void
     {
         $passMatch = Validator::checkPassword($_POST['password'], $_POST['password2']);
         $isEmailValid = Validator::checkEmail($_POST['email']);
@@ -224,7 +224,7 @@ class User extends AbstractController implements ControllerInterface
             echo 'Patikrinkite duomenis';
         }
     }
-        public function check()
+        public function check(): void
         {
             $email = $_POST['email'];
             $password = md5($_POST['password']);
@@ -245,9 +245,10 @@ class User extends AbstractController implements ControllerInterface
             }
         }
 
-        public function logout()
+        public function logout(): void
         {
             session_destroy();
+            Url::redirect('user/login');
         }
 
 

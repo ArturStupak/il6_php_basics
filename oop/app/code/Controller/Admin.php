@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Controller;
 
 use Core\AbstractController;
@@ -33,7 +35,7 @@ class Admin extends AbstractController implements ControllerInterface
 
     public function index()
     {
-        $this->render('index');
+        $this->renderAdmin('index');
     }
 
     public function users()
@@ -42,7 +44,7 @@ class Admin extends AbstractController implements ControllerInterface
         $this->renderAdmin('users/list');
     }
 
-    public function userEdit($id)
+    public function userEdit(int $id): void
     {
         $user = new UserModel();
         $user->load($id);
@@ -125,7 +127,7 @@ class Admin extends AbstractController implements ControllerInterface
         $this->renderAdmin('ads/list');
     }
 
-    public function userupdate()
+    public function userupdate(): void
     {
         $userId = $_POST['user_id'];
         $user = new UserModel();
@@ -151,7 +153,7 @@ class Admin extends AbstractController implements ControllerInterface
 
     }
 
-    public function adedit($id)
+    public function adedit(int $id): void
     {
         $ad = new Ad($id);
         $form = new FormHelper('admin/adupdate', 'POST');
@@ -213,7 +215,7 @@ class Admin extends AbstractController implements ControllerInterface
         $this->renderAdmin('ads/edit');
     }
 
-    public function adupdate()
+    public function adupdate(): void
     {
         $adId = $_POST['id'];
         $ad = new Ad($adId);
@@ -233,7 +235,7 @@ class Admin extends AbstractController implements ControllerInterface
 
 
 
-    public function massadupdate()
+    public function massadupdate(): void
     {
 
         $action = $_POST['active'];

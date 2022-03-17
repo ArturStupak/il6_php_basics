@@ -1,15 +1,27 @@
 
+
 <div class="message">
-    <?php foreach ($this->data['message'] as $message): ?>
+    <?php foreach ($this->data['chat'] as $chat): ?>
         <div class="demotext">
             <div>
-                <h2>Message</h2>
+                <p><?= $chat['chat_friend']->getName() ?></p>
             </div>
             <div>
-                <p><?php echo $message->getMessage(); ?></p>
+                <p><?php echo $chat['message']->getDate() ?></p>
+            </div>
+            <?php $class = '';
+            if($chat['message']->getReceiverId() == $_SESSION['user_id'] && $chat['message']->getStatus() == 1 )
+            {
+                $class = 'bolt';
+            }
+            ?>
+            <div class="last-message-body <?=  $class ?>">
+                <p><?php echo $chat['message']->getMessage() ?></p>
             </div>
             <div>
-                <p><?php echo $message->getDate(); ?></p>
+                <a href="<?= $this->url('message/chat/' . $chat['chat_friend']->getId())?>">
+                    Chat with <?= $chat['chat_friend']->getName()?>
+                </a>
             </div>
         </div>
     <?php endforeach; ?>

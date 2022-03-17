@@ -1,4 +1,51 @@
+/* http://meyerweb.com/eric/tools/css/reset/
+   v2.0 | 20110126
+   License: none (public domain)
+*/
 
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    /*margin: 0;*/
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+body {
+    line-height: 1;
+}
+ol, ul {
+    list-style: none;
+}
+blockquote, q {
+    quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: '';
+    content: none;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
 header{
     border: solid 1px #000;
     margin-bottom: 50px;
@@ -21,32 +68,18 @@ footer{
     left: 900px;
     color: black;
 }
-.login h1{
-    color:red;
-}
-.register h1{
-    color: red;
-}
+
 .row {
     display: flex;
     flex-direction: column;
     padding-left: 300px;
     padding-right: 300px;
 }
-.row h1{
-    color: red;
-}
-.homePage h1{
-    color: red;
-}
 
 .column {
     display: flex;
     flex-wrap: wrap;
-
-
 }
-
 .column h1{
     text-align: center;
 }
@@ -54,6 +87,7 @@ footer{
 .wrapper {
     display: flex;
     flex-wrap: wrap;
+    flex-direction: column;
 }
 .box {
     margin: 10px;
@@ -70,11 +104,18 @@ footer{
     display: flex;
     flex-direction: column;
 }
-.comments
-{
-    display: flex;
-    flex-direction: column;
+.wrapper-single > div{
+
+    width: 300px;
+    /*margin: 5px;*/
+    margin-right: 300px;
+    padding: 5px;
 }
+/*.comments*/
+/*{*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*}*/
 
 
 .demotext {
@@ -88,11 +129,10 @@ footer{
     /*font-size: 30px;*/
     border-radius: 50px;
     padding: 10px;
-
-
 }
-
-
+.demotext > div{
+    margin: 10px;
+}
 .demotext h2
 {
     font-family: Georgia, serif;
@@ -106,15 +146,6 @@ footer{
     font-variant: normal;
     text-transform: none;
 }
-.wrapper-single h1{
-    color:red;
-}
-
-/*body{*/
-/*    background: url("https://images.hdqwalls.com/wallpapers/bmw-i8-2019-o1.jpg");*/
-/*    background-repeat: no-repeat;*/
-/*    background-attachment: fixed;*/
-/*}*/
 
 .list-wrapper{
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
@@ -125,7 +156,7 @@ footer{
 }
 .list-wrapper > a:link, a:visited {
     background-color: blue;
-    color: white;
+    /*color: white;*/
     padding: 14px 25px;
     text-align: center;
     text-decoration: none;
@@ -195,4 +226,58 @@ footer{
     position: relative;
     display: inline-block;
     border-radius: 2px;
+}
+.message-box{
+    border: 1px solid #888888;
+    border-radius: 20px;
+    padding: 10px;
+    margin-bottom: 20px;
+    display: flex;
+    width: 40%;
+}
+.my{
+    background: #ccff00;
+    margin-left: 30%;
+}
+
+.him{
+    background: blanchedalmond;
+}
+.btn.submit{
+    background: #ccff00;
+    border: 0;
+    border-radius: 30px;
+}
+
+.last-message-body.bolt{
+    font-weight: bold;
+}
+.chat-box {
+    display: flex;
+    flex-wrap: wrap;
+}
+.image-wrapper img{
+    width: 300px;
+}
+.list{
+    flex-direction: column;
+    /*flex-direction: row;*/
+}
+.delete-button{
+    margin-top: 60px;
+}
+/*.ad{*/
+/*    display: flex;*/
+/*}*/
+.card{
+    margin: 10px;
+}
+.pagination{
+    position: center;
+}
+.ads-list{
+    display: flex;
+}
+.favorite-list{
+    display: flex;
 }

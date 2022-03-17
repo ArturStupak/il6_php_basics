@@ -9,7 +9,7 @@
                 <img width="200" height="130" src="<?php echo $ad->getImage() ?>">
                 <p class="price"><?php echo $ad->getTitle(). ' '. $ad->getPrice() . ' '?></p>
                 <p>
-                    <button onclick= "window.location.href='<?php echo BASE_URL. '/catalog/show/'. $ad->getSlug() ?>'">
+                    <button onclick= "window.location.href='<?php echo BASE_URL. '/catalog/show/'. $ad->getSlug() ?>'" class="btn btn-primary">
                         Clisk here
                     </button>
                 </p>
@@ -26,12 +26,11 @@
         <div class="list-wrapper">
             <img width="200" height="130" src="<?php echo $ad->getImage() ?>">
             <p class="price"><?php echo $ad->getTitle(). ' '. $ad->getPrice() . ' '?></p>
-<!--            <p>-->
-<!--                <button onclick="--><?php //echo BASE_URL. '/catalog/show/'. $ad->getSlug() ?><!--">-->
-<!--                Clisk here-->
-<!--                </button>-->
-<!--            </p>-->
-            <a href="<?php echo BASE_URL. '/catalog/show/'. $ad->getSlug() ?>">click</a>
+            <p>
+                <button onclick="<?php echo BASE_URL. '/catalog/show/'. $ad->getSlug() ?>" class="btn btn-primary">
+                Clisk here
+                </button>
+            </p>
         </div>
         <?php endforeach; ?>
     </div>

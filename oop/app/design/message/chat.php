@@ -1,26 +1,25 @@
 
-<head>
-    <title>Autopliusas</title>
-    <link rel="stylesheet" href="<?php echo BASE_URL_WITHOUT_INDEX_PHP.'css/style.css';?>">
-</head>
-
-<h1>Chat</h1>
-<div class="chat">
-        <form action="<?php echo $this->Url('/message/createMessage') ?>" method="POST">
-            <div>
-                <select name="user_id">
-                    <?php foreach($this->data['options'] as $key => $user):?>
-                        <option value="<?php echo $key?>">
-                            <?php echo $user; ?>
-                        </option>
-                    <?php endforeach;?>
-                </select>
+<div class="wrapper">
+    <?php foreach ($this->data['messages'] as $message): ?>
+        <?php  $class = $message->getSenderId() == $_SESSION['user_id'] ? 'my' :   'him'; ?>
+        <div class="message-box <?= $class ?>" >
+            <div class="message">
+                <?= $message->getMessage() ?>
             </div>
-            <div>
-                <textarea name="message" placeholder="message"></textarea>
+            <div class="date">
+                <?= $message->getDate() ?>
             </div>
-            <div>
-                <input type="submit" value="send" name="create">
-            </div>
-        </form>
+        </div>
+    <?php endforeach; ?>
+        <div class="chat-box">
+            <form action="<?= $this->url('message/send') ?>" method="POST">
+                <div>
+                    <textarea name="message"></textarea>
+                    <input type="hidden" name="receiver_id" value="<?= $this->data['receiver_id'] ?>">
+                </div>
+                <div>
+                <input type="submit" value="Send" class="btn submit">
+                </div>
+            </form>
+        </div>
 </div>

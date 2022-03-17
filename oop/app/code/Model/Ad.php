@@ -1,5 +1,6 @@
 <?php
 
+declare(strict_types=1);
 namespace Model;
 
 use Core\AbstractModel;
@@ -12,175 +13,175 @@ class Ad extends AbstractModel implements ModelInterface
 {
     protected const TABLE = 'ads';
 
-    private $title;
+    private string $title;
 
-    private $description;
+    private string $description;
 
-    private $manufacturerId;
+    private int $manufacturerId;
 
-    private $modelId;
+    private int $modelId;
 
-    private $price;
+    private float $price;
 
-    private $year;
+    private int $year;
 
-    private $typeId;
+    private int $typeId;
 
-    private $userId;
+    private int $userId;
 
-    private $image;
+    private string $image;
 
-    private $active;
+    private int $active;
 
-    private $slug;
+    private string $slug;
 
-    private $vin;
+    private int  $vin;
 
-    private $visitors;
+    private int $visitors;
 
 
 
-    public function __construct($id = null)
+    public function __construct(?int $id = null)
     {
         if($id !== null){
             $this->load($id);
         }
     }
 
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
 
-    public function setTitle($title)
+    public function setTitle(string $title): void
     {
         $this->title = $title;
     }
 
-    public function getDescription()
+    public function getDescription() :string
     {
         return $this->description;
     }
 
-    public function setDescription($description)
+    public function setDescription(string $description): void
     {
         $this->description = $description;
 
     }
 
-    public function getManufacturerId()
+    public function getManufacturerId(): int
     {
         return $this->manufacturerId;
     }
 
-    public function setManufacturerId($manufacturerId)
+    public function setManufacturerId(int $manufacturerId): void
     {
         $this->manufacturerId = $manufacturerId;
     }
-    public function getModelId()
+    public function getModelId(): int
     {
         return $this->modelId;
     }
 
-    public function setModelId($modelId)
+    public function setModelId(int $modelId): void
     {
         $this->modelId = $modelId;
     }
 
 
-    public function getPrice()
+    public function getPrice(): float
     {
         return $this->price;
     }
 
-    public function setPrice($price)
+    public function setPrice(float $price): void
     {
         $this->price = $price;
 
     }
 
-    public function getYear()
+    public function getYear(): int
     {
         return $this->year;
     }
 
-    public function setYear($year)
+    public function setYear(int $year): void
     {
         $this->year = $year;
     }
 
-    public function getTypeId()
+    public function getTypeId(): int
     {
         return $this->typeId;
     }
 
-    public function setTypeId($typeId)
+    public function setTypeId($typeId): void
     {
         $this->typeId = $typeId;
     }
 
-    public function getUserId()
+    public function getUserId(): int
     {
         return $this->userId;
     }
 
-    public function setUserId($userId)
+    public function setUserId(int $userId): void
     {
         $this->userId = $userId;
     }
 
-    public function getImage()
+    public function getImage(): string
     {
         return $this->image;
     }
 
-    public function setImage($image)
+    public function setImage(string $image): void
     {
         $this->image = $image;
     }
 
-    public function isActive()
+    public function isActive(): int
     {
         return $this->active;
     }
 
-    public function setActive($active)
+    public function setActive(int $active): void
     {
         $this->active = $active;
     }
 
-    public function getSlug()
+    public function getSlug(): string
     {
         return $this->slug;
     }
 
-    public function setSlug($slug)
+    public function setSlug(string $slug): void
     {
         $this->slug = $slug;
     }
 
-    public function getVin()
+    public function getVin(): int
     {
         return $this->vin;
     }
 
-    public function setVin($vin)
+    public function setVin(int $vin): void
     {
         $this->vin = $vin;
     }
 
-    public function getVisitors()
+    public function getVisitors(): int
     {
         return $this->visitors;
     }
 
-    public function setVisitors($visitors)
+    public function setVisitors($visitors): void
     {
         $this->visitors = $visitors;
     }
 
 
-    public function assignData()
+    public function assignData(): void
     {
         $this->data = [
             'title' => $this->title,
@@ -199,10 +200,10 @@ class Ad extends AbstractModel implements ModelInterface
         ];
     }
 
-    public function load($id)
+    public function load(int $id): Ad
     {
         $db = new DBHelper();
-        $ad = $db->select()->from(self::TABLE)->where('id', $id)->getOne();
+        $ad = $db->select()->from(self::TABLE)->where('id',(string) $id)->getOne();
         if(!empty($ad))
         {
             $this->id = $ad['id'];
@@ -211,19 +212,19 @@ class Ad extends AbstractModel implements ModelInterface
             $this->description = $ad['description'];
             $this->modelId = $ad['model_id'];
             $this->price = $ad['price'];
-            $this->year = $ad['year'];
+            $this->year = (int)$ad['year'];
             $this->typeId = $ad['type_id'];
             $this->userId = $ad['user_id'];
             $this->image = $ad['image'];
             $this->active = $ad['active'];
             $this->slug = $ad['slug'];
-            $this->vin = $ad['vin'];
+            $this->vin = (int)$ad['vin'];
             $this->visitors = $ad['visitors'];
         }
         return $this;
     }
 
-    public function loadBySlug($slug)
+    public function loadBySlug(string $slug): ?Ad
     {
         $db = new DBHelper();
         $rez = $db->select()->from(self::TABLE)->where('slug', $slug)->getOne();
@@ -232,11 +233,11 @@ class Ad extends AbstractModel implements ModelInterface
             $this->load($rez['id']);
             return $this;
         }else{
-            return false;
+            return null;
         }
     }
 
-    public static function getAllAds($page = null, $limit = null)
+    public static function getAllAds(?int $page = null, ?int $limit = null): array
     {
 //        $results_per_page= 4;
 //        if(isset($_GET['page']))
@@ -247,7 +248,7 @@ class Ad extends AbstractModel implements ModelInterface
 //        }
 
         $db = new DBHelper();
-        $db->select()->from(self::TABLE)->where('active', 1);
+        $db->select()->from(self::TABLE)->where('active', (string) 1);
         if($limit != null)
         {
             $db->limit($limit);
@@ -266,7 +267,7 @@ class Ad extends AbstractModel implements ModelInterface
         return $ads;
     }
 
-    public static function getNewest($limit)
+    public static function getNewest(int $limit): array
     {
         $db = new DBHelper();
         $data = $db->select()->from(self::TABLE)->orderBy('id', 'DESC')->limit($limit)->get();
@@ -279,12 +280,12 @@ class Ad extends AbstractModel implements ModelInterface
         return $ads;
     }
 
-    public static function getPopular($limit)
+    public static function getPopular(int $limit): array
     {
         $db = new DBHelper();
         $data = $db->select()
             ->from(self::TABLE)
-            ->where('active', 1)
+            ->where('active', (string)1)
             ->orderBy('visitors', 'DESC')
             ->limit($limit)
             ->get();
@@ -297,7 +298,7 @@ class Ad extends AbstractModel implements ModelInterface
         return $ads;
     }
 
-    public static function getAds($page = null, $limit = null)
+    public static function getAds(?int $page = null, ?int $limit = null): array
     {
 //
         $db = new DBHelper();
@@ -320,7 +321,7 @@ class Ad extends AbstractModel implements ModelInterface
         return $ads;
     }
 
-    public function getcomments()
+    public function getcomments(): void
     {
 
     }

@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 namespace Model;
 
 use Core\AbstractModel;
@@ -9,17 +9,17 @@ use Core\Interfaces\ModelInterface;
 class Comments extends AbstractModel implements ModelInterface
 {
 
-    private $userId;
+    private int $userId;
 
-    private $message;
+    private string $comment;
 
-    private $ip;
+    private string $ip;
 
-    private $adId;
+    private int $adId;
 
     protected const TABLE = 'comments';
 
-    public function __construct($id = null)
+    public function __construct(?int $id = null)
     {
         if($id !== null){
             $this->load($id);
@@ -27,66 +27,66 @@ class Comments extends AbstractModel implements ModelInterface
 
     }
 
-    public function assignData()
+    public function assignData(): void
     {
         $this->data = [
             'user_id' => $this->userId,
-            'message' => $this->message,
+            'comment' => $this->comment,
             'ip' => $this->ip,
             'ad_id' => $this->adId
         ];
     }
 
-    public function getUserId()
+    public function getUserId(): int
     {
         return $this->userId;
     }
 
-    public function setUserId($userId)
+    public function setUserId(int $userId): void
     {
         $this->userId = $userId;
     }
 
-    public function getComment()
+    public function getComment(): string
     {
         return $this->comment;
     }
 
-    public function setComment($comment)
+    public function setComment(string $comment): void
     {
         $this->comment = $comment;
     }
 
-    public function getDate()
+    public function getDate(): int
     {
         return $this->date;
     }
 
-    public function getIp()
+    public function getIp(): string
     {
         return $this->ip;
     }
 
-    public function setIp($ip)
+    public function setIp(string $ip): void
     {
         $this->ip = $ip;
     }
 
-    public function getAdId()
+    public function getAdId(): int
     {
         return $this->adId;
     }
 
-    public function setAdId($adId)
+    public function setAdId(int $adId): void
     {
         $this->adId = $adId;
     }
 
 
-    public function load($id)
+    public function load(int $id): object
     {
         $db = new DBHelper();
-        $data = $db->select()->from(self::TABLE)->where('id', $id)->getOne();
+        $data = $db->select()->from(self::TABLE)->where('id', (string) $id)->getOne();
         $this->id = $data['id'];
         $this->userId = $data['user_id'];
         $this->comment = $data['comment'];
@@ -95,11 +95,11 @@ class Comments extends AbstractModel implements ModelInterface
         return $this;
     }
 
-    public static function getAdComments($id)
+    public static function getAdComments(int $id): array
     {
 
         $db = new DBHelper();
-        $db->select()->from(self::TABLE)->where('ad_id', $id);
+        $db->select()->from(self::TABLE)->where('ad_id', (string) $id);
         $data = $db->get();
         $comments = [];
         foreach ($data as $element) {
