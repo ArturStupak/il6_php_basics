@@ -93,12 +93,12 @@ class Messages extends AbstractModel implements ModelInterface
         $db = new DBHelper();
         $data = $db->select()->from(self::TABLE)->where('id', (string) $id)->getOne();
         if(!empty($data)){
-            $this->id = $data['id'];
-            $this->receiverId = $data['receiver_id'];
+            $this->id =(int) $data['id'];
+            $this->receiverId =(int) $data['receiver_id'];
             $this->message = $data['message'];
             $this->date = $data['date'];
-            $this->senderId = $data['sender_id'];
-            $this->status = $data['status'];
+            $this->senderId =(int) $data['sender_id'];
+            $this->status =(int) $data['status'];
         }
         return $this;
     }
@@ -115,7 +115,7 @@ class Messages extends AbstractModel implements ModelInterface
         $messages = [];
         foreach ($data as $element) {
             $message = new Messages();
-            $message->load($element['id']);
+            $message->load((int)$element['id']);
             $messages[] = $message;
         }
         return $messages;
@@ -135,7 +135,7 @@ class Messages extends AbstractModel implements ModelInterface
         $messages = [];
         foreach ($data as $element){
             $message = new Messages();
-            $message->load($element['id']);
+            $message->load((int)$element['id']);
             $messages[] = $message;
         }
         return $messages;

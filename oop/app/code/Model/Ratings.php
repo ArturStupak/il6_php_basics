@@ -77,10 +77,10 @@ class Ratings extends AbstractModel implements ModelInterface
         $rating = new DBHelper();
         $data = $rating->select()->from(self::TABLE)->where('id', (string) $id)->getOne();
         if(!empty($data)){
-            $this->id = $data['id'];
-            $this->userId = $data['user_id'];
-            $this->adId = $data['ad_id'];
-            $this->rating = $data['rating'];
+            $this->id =(int) $data['id'];
+            $this->userId =(int) $data['user_id'];
+            $this->adId = (int)$data['ad_id'];
+            $this->rating =(int) $data['rating'];
             return $this;
         }
         return null;
@@ -91,7 +91,7 @@ class Ratings extends AbstractModel implements ModelInterface
         $rez = $db->select()->from(self::TABLE)->where('user_id', (string)$userId)->andWhere('ad_id', (string)$adId)->getOne();
 
         if (!empty($rez)) {
-            $this->load($rez['id']);
+            $this->load((int)$rez['id']);
             return $this;
         }
 

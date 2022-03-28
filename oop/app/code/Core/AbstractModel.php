@@ -63,7 +63,7 @@ class AbstractModel
     {
         $db = new DBHelper();
         $rez = $db->select('count(*)')->from(static::TABLE)->where('active', (string) 1)->get();
-        return $rez[0][0];
+        return (int) $rez[0][0];
 
     }
 

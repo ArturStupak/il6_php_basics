@@ -34,6 +34,9 @@
             </p>
         </div>
         <div>
+            <a href="<?php echo $this->url('catalog/edit', $ad->getId()) ?>" class="btn btn-primary">edit</a>
+        </div>
+        <div>
             <span>Skelbimo ivertinimas(<?= $this->data['rating_count'] ?>):</span>
         </div>
         <div>

@@ -206,20 +206,20 @@ class Ad extends AbstractModel implements ModelInterface
         $ad = $db->select()->from(self::TABLE)->where('id',(string) $id)->getOne();
         if(!empty($ad))
         {
-            $this->id = $ad['id'];
+            $this->id = (int) $ad['id'];
             $this->title = $ad['title'];
-            $this->manufacturerId = $ad['manufacturer_id'];
+            $this->manufacturerId = (int) $ad['manufacturer_id'];
             $this->description = $ad['description'];
-            $this->modelId = $ad['model_id'];
-            $this->price = $ad['price'];
+            $this->modelId = (int)$ad['model_id'];
+            $this->price =(int) $ad['price'];
             $this->year = (int)$ad['year'];
-            $this->typeId = $ad['type_id'];
-            $this->userId = $ad['user_id'];
+            $this->typeId =(int) $ad['type_id'];
+            $this->userId =(int) $ad['user_id'];
             $this->image = $ad['image'];
-            $this->active = $ad['active'];
+            $this->active =(int) $ad['active'];
             $this->slug = $ad['slug'];
             $this->vin = (int)$ad['vin'];
-            $this->visitors = $ad['visitors'];
+            $this->visitors =(int) $ad['visitors'];
         }
         return $this;
     }
@@ -230,7 +230,7 @@ class Ad extends AbstractModel implements ModelInterface
         $rez = $db->select()->from(self::TABLE)->where('slug', $slug)->getOne();
         if(!empty($rez))
         {
-            $this->load($rez['id']);
+            $this->load((int)$rez['id']);
             return $this;
         }else{
             return null;
@@ -239,14 +239,6 @@ class Ad extends AbstractModel implements ModelInterface
 
     public static function getAllAds(?int $page = null, ?int $limit = null): array
     {
-//        $results_per_page= 4;
-//        if(isset($_GET['page']))
-//        {
-//            $page = $_GET['page'];
-//        }else{
-//            $page = 1;
-//        }
-
         $db = new DBHelper();
         $db->select()->from(self::TABLE)->where('active', (string) 1);
         if($limit != null)
@@ -261,7 +253,7 @@ class Ad extends AbstractModel implements ModelInterface
         $ads = [];
         foreach ($data as $element) {
             $ad = new Ad();
-            $ad->load($element['id']);
+            $ad->load((int)$element['id']);
             $ads[] = $ad;
         }
         return $ads;
@@ -274,7 +266,7 @@ class Ad extends AbstractModel implements ModelInterface
         $ads = [];
         foreach ($data as $element) {
             $ad = new Ad();
-            $ad->load($element['id']);
+            $ad->load((int)$element['id']);
             $ads[] = $ad;
         }
         return $ads;
@@ -292,7 +284,7 @@ class Ad extends AbstractModel implements ModelInterface
         $ads = [];
         foreach ($data as $element) {
             $ad = new Ad();
-            $ad->load($element['id']);
+            $ad->load((int)$element['id']);
             $ads[] = $ad;
         }
         return $ads;
@@ -315,16 +307,13 @@ class Ad extends AbstractModel implements ModelInterface
         $ads = [];
         foreach ($data as $element) {
             $ad = new Ad();
-            $ad->load($element['id']);
+            $ad->load((int)$element['id']);
             $ads[] = $ad;
         }
         return $ads;
     }
 
-    public function getcomments(): void
-    {
 
-    }
 
 
 }

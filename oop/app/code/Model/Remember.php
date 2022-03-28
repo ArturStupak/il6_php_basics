@@ -64,9 +64,9 @@ class Remember extends AbstractModel implements ModelInterface
         $rating = new DBHelper();
         $data = $rating->select()->from(self::TABLE)->where('id', (string)$id)->getOne();
         if (!empty($data)) {
-            $this->id = $data['id'];
-            $this->userId = $data['user_id'];
-            $this->adId = $data['ad_id'];
+            $this->id = (int)$data['id'];
+            $this->userId =(int) $data['user_id'];
+            $this->adId =(int) $data['ad_id'];
             return $this;
         }
         return null;
@@ -94,9 +94,9 @@ class Remember extends AbstractModel implements ModelInterface
         $rating = new DBHelper();
         $data = $rating->select()->from(self::TABLE)->where('user_id', (string)$userId)->andWhere('ad_id', (string)$adId)->getOne();
         if (!empty($data)) {
-            $this->id = $data['id'];
-            $this->userId = $data['user_id'];
-            $this->adId = $data['ad_id'];
+            $this->id =(int) $data['id'];
+            $this->userId =(int) $data['user_id'];
+            $this->adId =(int) $data['ad_id'];
             return $this;
         }
         return null;
@@ -110,11 +110,25 @@ class Remember extends AbstractModel implements ModelInterface
         $ads = [];
         foreach ($data as $element) {
             $ad = new Ad();
-            $ad->load($element['ad_id']);
+            $ad->load((int)$element['ad_id']);
             $ads[] = $ad;
         }
         return $ads;
     }
+
+    public static function getUsersIdsByAd($adId){
+        $ad = new DBHelper();
+        $data= $ad->select()->from(self::TABLE)->where('ad_id', $adId)->get();
+        $usersIds = [];
+        foreach ($data as $element){
+            $usersIds[] = $element['user_id'];
+        }
+        return $usersIds;
+
+    }
+
+
+
 
 
 

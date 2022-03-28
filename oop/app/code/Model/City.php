@@ -28,7 +28,7 @@ class City
         $cities = [];
         foreach ($data as $element) {
             $city = new City();
-            $city->load($element['id']);
+            $city->load((int)$element['id']);
             $cities[] = $city;
         }
         return $cities;
@@ -38,7 +38,7 @@ class City
     {
         $db = new DBHelper();
         $city = $db->select()->from('cities')->where('id',(string) $id)->getOne();
-        $this->id = $city['id'];
+        $this->id =(int) $city['id'];
         $this->name = $city['name'];
         return $this;
 

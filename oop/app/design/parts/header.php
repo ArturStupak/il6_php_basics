@@ -19,7 +19,7 @@
             <span><i class="fa fa-fw fa-envelope"></i>All messages</span>
             <span class="badge"><?php echo $this->data['count']?></span>
         </a>
-        <a href="<?php echo $this->Url('catalog/showFavoriteAds') ?>">Favorites</a>
+        <a href="<?php echo $this->Url('catalog/showFavoriteAds') ?>">🌟</a>
         <a href="<?php echo $this->Url('/user/logout') ?>">Logout</a>
         <?php else: ?>
         <a href="<?php echo $this->Url('/user/login') ?>"><i class="fa fa-fw fa-user"></i>Login</a>

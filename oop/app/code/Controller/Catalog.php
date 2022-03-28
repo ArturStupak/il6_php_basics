@@ -9,11 +9,13 @@ use Helper\DBHelper;
 use Helper\FormHelper;
 use Helper\Url;
 use Model\Comments;
+use Model\Messages;
 use Model\Ratings;
 use Model\Remember;
 use Model\User as UserModel;
 use Model\Ad;
 use Core\Interfaces\ControllerInterface;
+use Service\PriceChangeInformer\Messenger;
 
 class Catalog extends AbstractController implements ControllerInterface
 {
@@ -35,12 +37,12 @@ class Catalog extends AbstractController implements ControllerInterface
 
     public function index(): void
     {
-        $this->data['count'] = Ad::count();
+        $this->data['ad_count'] = Ad::count();
         $page = 0;
         if(isset($_GET['p'])){
             $page = (int)$_GET['p'] -1;
         }
-        $this->data['ads'] = Ad::getAllAds($page * 2, 2);
+        $this->data['ads'] = Ad::getAllAds($page * 2, 5);
         $this->render('catalog/list');
 
     }
@@ -108,13 +110,13 @@ class Catalog extends AbstractController implements ControllerInterface
         $ad->setDescription($_POST['description']);
         $ad->setManufacturerId(1);
         $ad->setModelId(1);
-        $ad->setPrice($_POST['price']);
-        $ad->setYear($_POST['year']);
+        $ad->setPrice((int)$_POST['price']);
+        $ad->setYear((int)$_POST['year']);
         $ad->setTypeId(1);
         $ad->setImage($_POST['image']);
         $ad->setActive(1);
         $ad->setSlug($slug);
-        $ad->SetVin($_POST['vin']);
+        $ad->SetVin((int)$_POST['vin']);
         $ad->save();
         Url::redirect('catalog/all');
 
@@ -189,17 +191,35 @@ class Catalog extends AbstractController implements ControllerInterface
     {
         $adId = $_POST['id'];
         $ad = new Ad();
-        $ad->load($adId);
+        $ad->load((int)$adId);
+        if($ad->getPrice() != $_POST['price'])
+        {
+            $messenger = new Messenger();
+            $messenger->setMessages($adId);
+        }
         $ad->setTitle($_POST['title']);
         $ad->setDescription($_POST['description']);
         $ad->setManufacturerId(1);
         $ad->setModelId(1);
-        $ad->setPrice($_POST['price']);
-        $ad->setYear($_POST['year']);
+        $ad->setPrice((float)$_POST['price']);
+        $ad->setYear((int)$_POST['year']);
         $ad->setTypeId(1);
         $ad->setUserId($_SESSION['user_id']);
         $ad->setImage($_POST['image']);
         $ad->save();
+
+    }
+    public function createMessage(): void
+    {
+
+        $ad = new Messages();
+        $ad->setReceiverId((int)$_POST['user_id']);
+        $ad->setMessage($_POST['message']);
+        $ad->setSenderId($_SESSION['user_id']);
+        $ad->setStatus(1);
+        $ad->save();
+        Url::redirect('message/');
+
     }
 
 

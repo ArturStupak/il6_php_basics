@@ -13,11 +13,13 @@
 <!--            </a>-->
 <!--        </div>-->
         <div class="card" style="width: 18rem;">
-            <img src="<?php echo $ad->getImage() ?>" class="card-img-top" alt="...">
+            <div >
+                <img src="<?php echo $ad->getImage() ?>" class="card-img-top" alt="...">
+            </div>
             <div class="card-body">
                 <h5 class="card-title"><?php echo $ad->getTitle() ?></h5>
                 <p class="card-text"><?php echo $ad->getPrice() ?></p>
-                <a href="<?php echo $this->url('catalog/show', $ad->getSlug()) ?>" class="btn btn-primary">Go somewhere</a>
+                <a href="<?php echo $this->url('catalog/show', $ad->getSlug()) ?>" class="btn btn-primary">More information</a>
             </div>
         </div>
     <?php endforeach; ?>

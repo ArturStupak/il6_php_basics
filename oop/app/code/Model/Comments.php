@@ -87,11 +87,11 @@ class Comments extends AbstractModel implements ModelInterface
     {
         $db = new DBHelper();
         $data = $db->select()->from(self::TABLE)->where('id', (string) $id)->getOne();
-        $this->id = $data['id'];
-        $this->userId = $data['user_id'];
+        $this->id =(int) $data['id'];
+        $this->userId =(int) $data['user_id'];
         $this->comment = $data['comment'];
         $this->ip = $data['ip'];
-        $this->adId = $data['ad_id'];
+        $this->adId =(int) $data['ad_id'];
         return $this;
     }
 
@@ -104,7 +104,7 @@ class Comments extends AbstractModel implements ModelInterface
         $comments = [];
         foreach ($data as $element) {
             $comment = new Comments();
-            $comment->load($element['id']);
+            $comment->load((int)$element['id']);
             $comments[] = $comment;
         }
         return $comments;

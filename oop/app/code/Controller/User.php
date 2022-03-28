@@ -215,7 +215,7 @@ class User extends AbstractController implements ControllerInterface
             $user->setPhone($_POST['phone']);
             $user->setPassword(md5($_POST['password']));
             $user->setEmail($_POST['email']);
-            $user->setCityId($_POST['city_id']);
+            $user->setCityId((int)$_POST['city_id']);
             $user->setActive( 1);
             $user->setRoleId(0);
             $user->save();
